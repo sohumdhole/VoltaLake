@@ -1,0 +1,19 @@
+{
+  "ie_prime_retrofit_market_size_certs": 437923,
+  "gb_prime_retrofit_market_size_meters": 5509625,
+  "parameters_and_assumptions": {
+    "channel_cost_per_contact_eur": {
+      "digital": 4.5,
+      "direct_mail": 8.0,
+      "telemarketing": 25.0
+    },
+    "conversion_rate_ranges": {
+      "pessimistic": 0.012,
+      "base": 0.028,
+      "optimistic": 0.055
+    },
+    "annual_customer_gross_margin_eur": 240.0,
+    "average_customer_tenure_years": 3.2,
+    "retrofit_heat_pump_referral_fee_eur": 450.0
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "catalog": "voltalake",
+  "schema": "gold",
+  "tables": [
+    {
+      "name": "fact_market_switching",
+      "description": "Annual and periodic domestic electricity switching numbers, customer counts, and switching rates (churn proxy) for Ireland (CRU) and Great Britain (Ofgem).",
+      "columns": {
+        "year": "Calendar year of reporting (e.g., 2018-2024)",
+        "jurisdiction": "Energy regulatory jurisdiction: 'IE' for Ireland, 'GB' for Great Britain",
+        "source": "Originating regulatory body: 'CRU' or 'Ofgem/DESNZ'",
+        "electricity_switches": "Gross count of domestic meter switches / transfers between suppliers",
+        "avg_customers": "Total domestic electricity meter base in jurisdiction",
+        "switching_rate_pct": "Annual switching percentage (electricity_switches / avg_customers * 100), used as the primary churn proxy"
+      }
+    },
+    {
+      "name": "kpi_retrofit_propensity_ie",
+      "description": "County-level building energy rating summary, oil dependency, EV adoption, and composite deep retrofit propensity index in Ireland.",
+      "columns": {
+        "county": "Irish administrative county name (e.g. CO. CARLOW, CO. DUBLIN)",
+        "total_certs": "Total Building Energy Rating certificates registered by SEAI in the county",
+        "d_or_worse_count": "Number of assessed dwellings with energy rating of D1, D2, E1, E2, F, or G",
+        "pct_d_or_worse": "Percentage of homes with BER D or worse (thermal inefficiency proxy)",
+        "pct_oil_dependent": "Percentage of homes heated by domestic heating oil (prime heat pump conversion candidates)",
+        "ev_penetration_pct": "Percentage of new/used vehicle licensing that are Battery Electric Vehicles (EVs)",
+        "retrofit_propensity_score": "Composite index (0 to 100) combining thermal need, oil dependency, consumption volume, and EV adoption",
+        "propensity_tier": "Strategic targeting tier: 'Prime Target', 'High', 'Moderate', 'Low'"
+      }
+    },
+    {
+      "name": "kpi_customer_personas",
+      "description": "Smart-meter segmented household archetypes from London trial mapped to commercial propositions and peak intensity.",
+      "columns": {
+        "household_id": "Household identifier (pseudonymised)",
+        "tariff_group": "Assigned tariff trial: 'Std' (Standard flat) or 'ToU' (Dynamic Time-of-Use)",
+        "avg_hh_kwh": "Average half-hourly electricity consumption in kWh",
+        "peak_hh_kwh": "Average half-hourly consumption during peak hours 16:00 to 20:00",
+        "peak_to_offpeak_ratio": "Ratio of peak consumption intensity to off-peak baseline",
+        "cluster": "K-Means cluster identifier (0 to 3)",
+        "persona_name": "Named customer archetype (Overnight EV Charger, Evening Peaker, Daytime Occupier, Balanced Steady)",
+        "target_proposition": "Tailored commercial retail energy proposition recommendation"
+      }
+    },
+    {
+      "name": "kpi_campaign_roi_sensitivity",
+      "description": "Marketing campaign unit economics sensitivity matrix across spend levels and conversion scenarios.",
+      "columns": {
+        "marketing_spend_eur": "Campaign marketing budget in EUR (€50,000 to €500,000)",
+        "conversion_rate": "Assumed conversion rate from contact to acquired customer (0.015 to 0.060)",
+        "contacts_reached": "Targeted audience reached based on €5.50 blended cost per contact",
+        "customers_acquired": "Net new customers acquired",
+        "cpa_eur": "Cost per acquisition (marketing_spend_eur / customers_acquired)",
+        "total_ltv_revenue_eur": "Estimated total lifetime value gross revenue generated over customer lifecycle",
+        "roi_pct": "Return on investment percentage ((LTV Revenue - Spend) / Spend * 100)"
+      }
+    },
+    {
+      "name": "data_quality_scorecard",
+      "description": "Automated pipeline quality audit tracking expectation pass rates and quarantined rows.",
+      "columns": {
+        "dataset_name": "Source table or pipeline being evaluated",
+        "expectation_rule": "Data contract rule expression",
+        "total_rows_evaluated": "Total volume of rows processed in run",
+        "passing_rows": "Volume of records satisfying rule",
+        "quarantined_rows": "Volume of violating records routed to quarantine",
+        "pass_rate_pct": "Percentage of records passing rule",
+        "status": "Audit outcome: 'PASS', 'WARN', or 'FAIL'"
+      }
+    }
+  ]
+}

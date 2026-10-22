@@ -1,0 +1,213 @@
+# ============================================================================
+# VoltaLake: Unity Catalog Semantic Model & Metric Views Definition
+# Single Source of Truth for Enterprise Energy Customer KPIs
+# Catalog: voltalake | Schema: semantic
+# ============================================================================
+
+version: "2.0-audited"
+catalog: "voltalake"
+schema: "semantic"
+
+semantic_models:
+  - name: market_switching_metrics
+    description: "Single source of truth for energy supplier switching rates and churn proxy across Ireland (CRU) and Great Britain (DESNZ Table 2.7.1)."
+    base_table: "voltalake.gold.fact_market_switching"
+    
+    dimensions:
+      - name: jurisdiction
+        type: categorical
+        expr: "jurisdiction"
+        description: "Energy market jurisdiction ('IE' for Ireland, 'GB' for Great Britain)"
+      - name: reporting_year
+        type: time
+        expr: "year"
+        description: "Calendar year of regulatory reporting"
+      - name: source_regulator
+        type: categorical
+        expr: "source"
+        description: "National energy market regulator ('CRU' or 'DESNZ Table 2.7.1')"
+        
+    measures:
+      - name: total_switches
+        expr: "electricity_switches"
+        agg: sum
+        description: "Total gross electricity meter transfers / switches"
+      - name: customer_base
+        expr: "avg_customers"
+        agg: avg
+        description: "Average active domestic meter customer base"
+      - name: switching_rate_churn_proxy
+        expr: "(SUM(electricity_switches) / AVG(avg_customers)) * 100.0"
+        agg: custom
+        format: "0.00%"
+        description: "Annualised customer switching rate serving as the regulated proxy for market churn"
+      - name: in_contract_renegotiation_rate
+        expr: "renegotiation_rate_pct"
+        agg: avg
+        format: "0.0%"
+        description: "Percentage of customers successfully renegotiating terms with their incumbent supplier without switching (CRU, Ireland)"
+
+  - name: property_retrofit_metrics
+    description: "Single source of truth for 26 conformed Irish counties: building energy efficiency, heat-pump suitability, residential demand per dwelling, and BEV registrations."
+    base_table: "voltalake.gold.kpi_retrofit_propensity_ie"
+    
+    dimensions:
+      - name: county
+        type: categorical
+        expr: "county"
+        description: "Conformed 26 administrative counties of Ireland (zero imputation)"
+      - name: propensity_tier
+        type: categorical
+        expr: "propensity_tier"
+        description: "Propensity classification: Prime Target, High, Moderate, Low"
+        
+    measures:
+      - name: total_ber_certificates
+        expr: "total_ber_certs"
+        agg: sum
+        description: "Total registered Building Energy Rating certificates"
+      - name: sub_standard_homes_count
+        expr: "poor_ber_certs"
+        agg: sum
+        description: "Number of dwellings rated D1 or worse requiring deep thermal retrofit"
+      - name: average_retrofit_propensity_score
+        expr: "retrofit_propensity_score"
+        agg: avg
+        format: "0.0"
+        description: "Multi-criteria propensity index (0-100) combining thermal need, oil dependency, consumption per dwelling, and 2025 BEV share"
+      - name: sub_standard_ber_share_pct
+        expr: "pct_d_or_worse"
+        agg: avg
+        format: "0.0%"
+        description: "Percentage of assessed housing stock exhibiting substandard thermal performance (BER D-G)"
+      - name: oil_dependency_share_pct
+        expr: "pct_oil_dependent"
+        agg: avg
+        format: "0.0%"
+        description: "Percentage of homes relying on domestic heating oil (prime heat pump displacement candidates)"
+      - name: residential_demand_per_dwelling_kwh
+        expr: "residential_kwh_per_dwelling"
+        agg: avg
+        format: "#,##0 kWh"
+        description: "Annual residential electricity consumption normalized per dwelling (CSO Table MEC03 / BER count)"
+      - name: bev_share_of_new_car_registrations_pct
+        expr: "bev_share_new_cars_pct"
+        agg: avg
+        format: "0.00%"
+        description: "Battery Electric Vehicle (BEV) share of total new private car registrations in 2025 (CSO Table TEM27)"
+
+  - name: household_load_personas_metrics
+    description: "Single source of truth for half-hourly smart-meter customer persona segmentation and peak flexibility."
+    base_table: "voltalake.gold.kpi_customer_personas"
+    
+    dimensions:
+      - name: persona_name
+        type: categorical
+        expr: "persona_name"
+        description: "Machine learning derived archetype: Overnight EV & Storage Charger, Daytime Active Occupier, Balanced Baseline Consumer"
+      - name: tariff_group
+        type: categorical
+        expr: "tariff_group"
+        description: "Trial tariff allocation ('Std' for Standard Flat, 'ToU' for Dynamic Time-of-Use)"
+      - name: target_proposition
+        type: categorical
+        expr: "target_proposition"
+        description: "Commercial proposition recommendation"
+        
+    measures:
+      - name: household_count
+        expr: "1"
+        agg: count
+        description: "Number of distinct smart-meter households in persona cohort"
+      - name: average_peak_demand_kwh
+        expr: "peak_hh_kwh"
+        agg: avg
+        format: "0.000"
+        description: "Average half-hourly electricity consumption during system peak window (16:00-20:00)"
+      - name: average_offpeak_demand_kwh
+        expr: "offpeak_hh_kwh"
+        agg: avg
+        format: "0.000"
+        description: "Average half-hourly electricity consumption outside system peak window"
+      - name: peak_to_offpeak_demand_ratio
+        expr: "peak_to_offpeak_ratio"
+        agg: avg
+        format: "0.00"
+        description: "Ratio of peak consumption intensity relative to baseline off-peak consumption"
+
+  - name: tariff_did_experiment_metrics
+    description: "Single source of truth for Difference-in-Differences statistical evaluation comparing 2012 pre-period baseline to 2013 ToU trial period."
+    base_table: "voltalake.gold.kpi_tariff_did_experiment"
+    
+    dimensions:
+      - name: tariff_group
+        type: categorical
+        expr: "tariff_group"
+        description: "Trial tariff allocation ('Std' or 'ToU')"
+        
+    measures:
+      - name: evaluated_household_count
+        expr: "1"
+        agg: count
+        description: "Number of households observed in both 2012 and 2013 (n=61 total: 29 Std, 32 ToU)"
+      - name: baseline_peak_2012
+        expr: "peak_2012"
+        agg: avg
+        format: "0.0000"
+        description: "Mean pre-period baseline peak consumption (kWh/half-hour)"
+      - name: trial_peak_2013
+        expr: "peak_2013"
+        agg: avg
+        format: "0.0000"
+        description: "Mean post-period trial peak consumption (kWh/half-hour)"
+      - name: change_in_peak_delta
+        expr: "delta_peak_kwh"
+        agg: avg
+        format: "+0.0000"
+        description: "Change in peak demand between 2012 and 2013 (peak_2013 - peak_2012)"
+
+  - name: campaign_simulator_metrics
+    description: "Single source of truth for marketing campaign unit economics, acquisition cost, and lifetime value."
+    base_table: "voltalake.gold.kpi_campaign_roi_sensitivity"
+    
+    dimensions:
+      - name: marketing_spend_tier
+        type: categorical
+        expr: "marketing_spend_eur"
+        description: "Allocated campaign marketing budget in EUR"
+      - name: conversion_rate_scenario
+        type: categorical
+        expr: "conversion_rate"
+        description: "Assumed conversion rate percentage (1.5% to 6.0%)"
+        
+    measures:
+      - name: audience_contacts_reached
+        expr: "contacts_reached"
+        agg: avg
+        format: "#,##0"
+        description: "Targeted contacts reached (Formula: marketing_spend_eur / cost_per_contact_eur)"
+      - name: customers_acquired
+        expr: "customers_acquired"
+        agg: avg
+        format: "#,##0"
+        description: "Acquired energy customers (contacts_reached * conversion_rate)"
+      - name: cost_per_acquisition_cpa
+        expr: "cpa_eur"
+        agg: avg
+        format: "€0.00"
+        description: "Cost per acquired energy customer (marketing_spend_eur / customers_acquired)"
+      - name: customer_lifetime_value_revenue
+        expr: "total_ltv_revenue_eur"
+        agg: sum
+        format: "€#,##0"
+        description: "Estimated gross lifetime value revenue generated by acquired cohort over 3.2-year tenure (€835.50 composite LTV)"
+      - name: marketing_return_on_investment_roi
+        expr: "roi_pct"
+        agg: avg
+        format: "0.0%"
+        description: "Percentage Return on Investment: ((Total LTV Revenue - Marketing Spend) / Marketing Spend) * 100"
+      - name: break_even_conversion_rate
+        expr: "break_even_conversion_rate"
+        agg: avg
+        format: "0.000%"
+        description: "Break-even conversion rate: cost_per_contact_eur / customer_ltv_eur (0.658%)"

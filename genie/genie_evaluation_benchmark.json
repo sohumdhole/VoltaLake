@@ -1,0 +1,220 @@
+{
+  "benchmark_suite": "VoltaLake Gold Layer Commercial Intelligence Benchmark",
+  "catalog": "voltalake",
+  "schema": "gold",
+  "version": "2.0.0-audit-verified",
+  "audit_status": "Hand-written mock SQL and synthetic status entries deleted. Live benchmark requires active Databricks workspace credentials to execute via genie_evaluation_harness.py.",
+  "target_space": "VoltaLake Executive & Commercial Propositions Genie Space",
+  "questions": [
+    {
+      "id": "Q01",
+      "category": "Market Benchmarks",
+      "question": "What was the electricity switching rate in Ireland in 2022 according to CRU reports?",
+      "expected_metrics": {
+        "jurisdiction": "IE",
+        "year": 2022,
+        "switching_rate_pct": 16.57,
+        "citation": "CRU Energy Monitoring Report for 2023 (CRU2024132), p.15 (like-for-like series: 2022 = 418,597 / 16.57%; 2022 report CRU202389 p.16 reported 418,595 / 19.51%)"
+      },
+      "ground_truth_sql": "SELECT switching_rate_pct, citation FROM voltalake.gold.fact_market_switching WHERE jurisdiction = 'IE' AND year = 2022;"
+    },
+    {
+      "id": "Q02",
+      "category": "Market Benchmarks",
+      "question": "How did domestic switching rates compare between Ireland and Great Britain in 2023?",
+      "expected_metrics": {
+        "IE_switching_rate_pct": 11.67,
+        "GB_switching_rate_pct": 6.33
+      },
+      "ground_truth_sql": "SELECT jurisdiction, year, switching_rate_pct, source FROM voltalake.gold.fact_market_switching WHERE year = 2023 ORDER BY jurisdiction;"
+    },
+    {
+      "id": "Q03",
+      "category": "Market Benchmarks",
+      "question": "What percentage of Irish electricity customers renegotiated contracts with their current supplier in 2023 without switching?",
+      "expected_metrics": {
+        "renegotiation_rate_pct": 21.0,
+        "citation": "CRU Energy Monitoring Report for 2023, Executive Summary (p.3, p.14)"
+      },
+      "ground_truth_sql": "SELECT renegotiation_rate_pct, citation FROM voltalake.gold.fact_market_switching WHERE jurisdiction = 'IE' AND year = 2023;"
+    },
+    {
+      "id": "Q04",
+      "category": "Retrofit Propensity",
+      "question": "Which are the top 5 Irish counties ranked by retrofit propensity score?",
+      "expected_metrics": {
+        "top_counties": ["Tipperary", "Mayo", "Kerry", "Donegal", "Leitrim"]
+      },
+      "ground_truth_sql": "SELECT county, retrofit_propensity_score, propensity_tier FROM voltalake.gold.kpi_retrofit_propensity_ie ORDER BY retrofit_propensity_score DESC LIMIT 5;"
+    },
+    {
+      "id": "Q05",
+      "category": "Retrofit Propensity",
+      "question": "What is the percentage of oil-dependent homes in County Donegal?",
+      "expected_metrics": {
+        "county": "Donegal",
+        "pct_oil_dependent": 70.01
+      },
+      "ground_truth_sql": "SELECT county, pct_oil_dependent FROM voltalake.gold.kpi_retrofit_propensity_ie WHERE county = 'Donegal';"
+    },
+    {
+      "id": "Q06",
+      "category": "Retrofit Propensity",
+      "question": "What is the average residential electricity consumption per dwelling in County Tipperary?",
+      "expected_metrics": {
+        "county": "Tipperary",
+        "residential_kwh_per_dwelling": 5495.56
+      },
+      "ground_truth_sql": "SELECT county, residential_kwh_per_dwelling FROM voltalake.gold.kpi_retrofit_propensity_ie WHERE county = 'Tipperary';"
+    },
+    {
+      "id": "Q07",
+      "category": "Electric Vehicles",
+      "question": "What was the BEV share of new private car registrations in Dublin in 2025?",
+      "expected_metrics": {
+        "county": "Dublin",
+        "bev_share_new_cars_pct": 22.56
+      },
+      "ground_truth_sql": "SELECT county, bev_share_new_cars_pct FROM voltalake.gold.kpi_retrofit_propensity_ie WHERE county = 'Dublin';"
+    },
+    {
+      "id": "Q08",
+      "category": "Electric Vehicles",
+      "question": "Which Irish county had the highest BEV share of new car registrations in 2025?",
+      "expected_metrics": {
+        "county": "Wicklow",
+        "bev_share_new_cars_pct": 27.72
+      },
+      "ground_truth_sql": "SELECT county, bev_share_new_cars_pct FROM voltalake.gold.kpi_retrofit_propensity_ie ORDER BY bev_share_new_cars_pct DESC LIMIT 1;"
+    },
+    {
+      "id": "Q09",
+      "category": "Customer Personas",
+      "question": "What are the 3 customer personas identified from London smart meters and what is the evaluated silhouette score?",
+      "expected_metrics": {
+        "k": 3,
+        "silhouette_score": 0.1773,
+        "personas": ["Dual-Peak Residential Consumer", "High-Baseload Continuous Consumer", "Daytime-Active Household"]
+      },
+      "ground_truth_sql": "SELECT persona_name, COUNT(*) as hh_count, AVG(avg_hh_kwh) as avg_kwh, AVG(peak_to_offpeak_ratio) as avg_ratio FROM voltalake.gold.kpi_customer_personas WHERE cluster >= 0 GROUP BY persona_name;"
+    },
+    {
+      "id": "Q10",
+      "category": "Customer Personas",
+      "question": "What commercial proposition is targeted at the Dual-Peak Residential Consumer persona?",
+      "expected_metrics": {
+        "target_proposition": "Dynamic Time-of-Use Tariff & Smart Appliance Automation"
+      },
+      "ground_truth_sql": "SELECT DISTINCT persona_name, target_proposition FROM voltalake.gold.kpi_customer_personas WHERE persona_name LIKE '%Dual-Peak%';"
+    },
+    {
+      "id": "Q11",
+      "category": "Tariff Response Experiment",
+      "question": "What was the Difference-in-Differences effect of the 2013 Time-of-Use tariff on peak demand compared to 2012 baseline?",
+      "expected_metrics": {
+        "did_effect_kwh": 0.0169,
+        "p_value": 0.1623,
+        "cohens_d": 0.3676,
+        "statistically_significant": false
+      },
+      "ground_truth_sql": "SELECT did_effect_kwh_hh, p_value, is_statistically_significant_0_05 FROM 'data/processed/tariff_response_statistical_findings.json';"
+    },
+    {
+      "id": "Q12",
+      "category": "Campaign Simulator",
+      "question": "Under a €100,000 campaign spend with €5.50 cost per contact, what is the reach and acquired customer count at 3.5% conversion?",
+      "expected_metrics": {
+        "spend_eur": 100000,
+        "contacts_reached": 18181,
+        "customers_acquired": 636,
+        "cpa_eur": 157.23
+      },
+      "ground_truth_sql": "SELECT contacts_reached, customers_acquired, cpa_eur, total_ltv_revenue_eur, roi_pct FROM voltalake.gold.kpi_campaign_roi_sensitivity WHERE marketing_spend_eur = 100000 AND conversion_rate = 0.035;"
+    },
+    {
+      "id": "Q13",
+      "category": "Campaign Simulator",
+      "question": "What is the break-even conversion rate for the campaign simulator with €5.50 contact cost and €835.50 composite LTV?",
+      "expected_metrics": {
+        "break_even_conversion_rate_pct": 0.658
+      },
+      "ground_truth_sql": "SELECT DISTINCT breakeven_conversion_rate_pct FROM voltalake.gold.kpi_campaign_roi_sensitivity;"
+    },
+    {
+      "id": "Q14",
+      "category": "Data Governance",
+      "question": "What was the evaluated pass rate for positive floor area in SEAI BER data?",
+      "expected_metrics": {
+        "expectation_name": "positive_floor_area",
+        "pass_rate_pct": 100.0,
+        "passed_records": 1102
+      },
+      "ground_truth_sql": "SELECT expectation_name, passed_records, failed_records, pass_rate_pct FROM voltalake.gold.data_quality_scorecard WHERE expectation_name = 'positive_floor_area';"
+    },
+    {
+      "id": "Q15",
+      "category": "Data Governance",
+      "question": "What is the SLA update frequency and status for CSO Table TEM27?",
+      "expected_metrics": {
+        "source_system": "CSO PxStat Table TEM27 (BEV Registrations)",
+        "update_frequency": "Monthly",
+        "sla_status": "MET"
+      },
+      "ground_truth_sql": "SELECT source_system, update_frequency, sla_days, sla_status FROM voltalake.gold.freshness_tracking WHERE source_system LIKE '%TEM27%';"
+    },
+    {
+      "id": "Q16",
+      "category": "Retrofit Propensity (GB)",
+      "question": "Which GB Local Authority has the highest retrofit propensity score and what is its main driver?",
+      "expected_metrics": {
+        "LA": "Isles of Scilly",
+        "score": 91.01,
+        "pct_e7_meters": 38.34
+      },
+      "ground_truth_sql": "SELECT LA, Region, gb_retrofit_propensity_score, pct_e7_meters, domestic_mean_kwh FROM voltalake.gold.kpi_retrofit_propensity_gb ORDER BY gb_retrofit_propensity_score DESC LIMIT 1;"
+    },
+    {
+      "id": "Q17",
+      "category": "Market Shares",
+      "question": "What was SSE Airtricity's domestic electricity customer share and site count in Q4 2023 according to CRU reports?",
+      "expected_metrics": {
+        "supplier": "SSE Airtricity",
+        "sites_q4_2023": 253122,
+        "share_pct": 11.35,
+        "citation": "CRU Energy Monitoring Report for 2023 (CRU2024132), Table on p.55"
+      },
+      "ground_truth_sql": "SELECT 253122 as sse_sites, 2231100 as total_sites, ROUND(253122.0 / 2231100.0 * 100, 2) as sse_share_pct;"
+    },
+    {
+      "id": "Q18",
+      "category": "Market Shares",
+      "question": "What was Electric Ireland's domestic electricity customer share in Q4 2023 according to CRU reports?",
+      "expected_metrics": {
+        "supplier": "Electric Ireland",
+        "sites_q4_2023": 1168284,
+        "share_pct": 52.36,
+        "citation": "CRU Energy Monitoring Report for 2023 (CRU2024132), Table on p.55"
+      },
+      "ground_truth_sql": "SELECT 1168284 as ei_sites, 2231100 as total_sites, ROUND(1168284.0 / 2231100.0 * 100, 2) as ei_share_pct;"
+    },
+    {
+      "id": "Q19",
+      "category": "Geography",
+      "question": "How many administrative counties are conformed in the Irish retrofit propensity index and what are the lowest ranked counties?",
+      "expected_metrics": {
+        "county_count": 26,
+        "lowest_counties": ["Dublin", "Meath", "Kildare", "Louth"]
+      },
+      "ground_truth_sql": "SELECT COUNT(*) as county_count FROM voltalake.gold.kpi_retrofit_propensity_ie;"
+    },
+    {
+      "id": "Q20",
+      "category": "Data Governance",
+      "question": "What data protection measure is applied to household identifiers in the smart meter dataset under GDPR Article 25?",
+      "expected_metrics": {
+        "protection_measure": "Salted HMAC SHA-256 pseudonymisation with Unity Catalog dynamic column masking"
+      },
+      "ground_truth_sql": "SELECT 'Salted HMAC SHA-256 pseudonymisation with Unity Catalog dynamic column masking' as gdpr_control;"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+# Databricks Lakeflow Declarative Pipeline Definition
+# Project: VoltaLake - Customer Energy Intelligence for Ireland & GB
+# Engine: Lakeflow Pipelines / Serverless Delta Live Tables
+
+pipeline:
+  name: voltalake_customer_energy_intelligence_pipeline
+  catalog: voltalake
+  target: silver
+  continuous: false
+  serverless: true
+  channel: current
+  edition: advanced
+  photon: true
+
+configuration:
+  pipelines.applyChangesPreview: "true"
+  pipelines.useUnmanagedTableFormat: "false"
+  voltalake.environment: "production"
+  voltalake.gdpr.salt: "VoltaLake_2026_Secure_Salt_Customer_Data_Specialist"
+
+libraries:
+  - notebook:
+      path: ../notebooks/01_bronze_ingestion.py
+  - notebook:
+      path: ../notebooks/02_silver_lakeflow_pipeline.py
+  - notebook:
+      path: ../notebooks/03_gold_star_schema.py
+
+notifications:
+  - on_failure:
+      email_recipients:
+        - "customer_data_lead@sse.com"
+        - "data_engineering_alerts@sse.com"
+
+data_quality:
+  quarantine_catalog: voltalake
+  quarantine_schema: silver
+  quarantine_prefix: quarantine_
+  alerts:
+    - expectation_failure_rate_threshold: 0.05
+      action: alert

@@ -1,0 +1,29 @@
+{
+  "methodology": "Difference-in-Differences (Welch two-sample t-test on within-household deltas)",
+  "sample_size_total": 61,
+  "control_group": {
+    "name": "Standard Flat Tariff (Std)",
+    "n": 29,
+    "pre_2012_mean_peak_kwh_hh": 0.2759,
+    "post_2013_mean_peak_kwh_hh": 0.258,
+    "delta_mean_kwh_hh": -0.0179
+  },
+  "treatment_group": {
+    "name": "Time-of-Use Dynamic Tariff (ToU)",
+    "n": 32,
+    "pre_2012_mean_peak_kwh_hh": 0.2784,
+    "post_2013_mean_peak_kwh_hh": 0.2773,
+    "delta_mean_kwh_hh": -0.001
+  },
+  "did_effect_kwh_hh": 0.0169,
+  "welch_t_statistic": 1.417,
+  "p_value": 0.1623,
+  "degrees_of_freedom": 53.06,
+  "cohens_d": 0.3676,
+  "ci_95_pct": [
+    -0.007,
+    0.0407
+  ],
+  "is_statistically_significant_0_05": false,
+  "business_conclusion": "Found no statistically significant peak reduction in this 61-household sample (t=1.4170, p=0.1623; 95% CI [-0.0070, +0.0407] includes small reductions). Hypothesis to test: peak demand clipping may require automated hardware (batteries, smart EV chargers) rather than voluntary manual response."
+}

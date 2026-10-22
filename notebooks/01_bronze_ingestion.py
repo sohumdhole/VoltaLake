@@ -10,7 +10,7 @@
 # MAGIC - Raw immutability: Raw files are stored verbatim in their native formats without lossy conversion.
 # MAGIC - Standard Audit Metadata: Every record receives `_source_file`, `_ingested_at`, `_source_system`, and `_jurisdiction`.
 # MAGIC 
-# MAGIC ### Interview Defense: Architectural Decisions
+# MAGIC ### Design Decisions: Architectural Decisions
 # MAGIC 1. **Why Auto Loader over standard batch streaming?** Auto Loader provides schema inference, schema evolution (`addNewColumns`), and file notification mode on cloud storage volumes without maintaining directory state manifests manually.
 # MAGIC 2. **Why UC Volumes instead of raw DBFS/S3 mount points?** DBFS mounts are deprecated in modern Databricks. UC Volumes enforce unified governance, IAM federation, and audit logging under Unity Catalog.
 

@@ -1,6 +1,6 @@
 # STRATEGIC INSIGHTS BRIEF: CUSTOMER ENERGY INTELLIGENCE
-**TO:** Managing Director / Commercial Propositions Director, SSE Energy Customer Solutions (Dublin)  
-**FROM:** Lead Customer Data Specialist & Analytics Engineer, Project VoltaLake  
+**TO:** Commercial Propositions Director, Irish energy retailer (illustrative)  
+**FROM:** Project VoltaLake Analytics Team  
 **DATE:** October 2026  
 **SUBJECT:** Data-Driven Customer Acquisition, In-Contract Retention, and Clean Energy Proposition Strategy Across Ireland and Great Britain  
 **CLASSIFICATION:** Commercial & Strategic — Production Lakehouse Intelligence (Zero-Fabrication Audit Verified)  
@@ -9,7 +9,7 @@
 
 ### EXECUTIVE SUMMARY
 
-Following historic energy market volatility, customer switching behaviour across Ireland and Great Britain has transitioned from crisis-driven price shopping to structured in-contract renegotiation and targeted clean technology adoption. Leveraging **VoltaLake**—an enterprise Lakehouse conforming over **3.5 million public energy records** across a Hugging Face mirror of SEAI data, CSO PxStat (MEC03, TEM27, and Census 2022 Table FY004B), CRU Annual Reports (PDFs), DESNZ Table 2.7.1, and UK Power Networks—this brief provides audited, empirical intelligence to defend SSE Airtricity’s customer base (**253,122 customer sites, 11.35% market share** [*CRU 2023 Report, Table on p.55*]) and capture high-margin retrofit origination.
+Following historic energy market volatility, customer switching behaviour across Ireland and Great Britain has transitioned from crisis-driven price shopping to structured in-contract renegotiation and targeted clean technology adoption. Leveraging **VoltaLake**—an enterprise Lakehouse conforming over **3.5 million public energy records** across a Hugging Face mirror of SEAI data, CSO PxStat (MEC03, TEM27, and Census 2022 Table FY004B), CRU Annual Reports (PDFs), DESNZ Table 2.7.1, and UK Power Networks—this brief provides audited, empirical intelligence to defend an Irish retail customer base (e.g. SSE Airtricity’s 253,122 customer sites, 11.35% market share [*CRU 2023 Report, Table on p.55*]) and capture high-margin retrofit origination.
 
 Key empirical findings:
 1. **The In-Contract Retention Window:** CRU retail market monitoring reports confirm that under the consistent like-for-like series (*CRU2024132, p.15*), total electricity switching decreased from **16.57% (418,597 switches) in 2022** to **11.67% (294,669 switches) in 2023** (a 29% decline in switches; *executive summary rounds to 12% on p.3/p.14*). In the previous 2022 report (*CRU202389, p.16*), the figure published was 19.51% (418,595 switches) under that report's earlier method, and 16.85% under its footnoted definition (*CRU202389 p.3*). In addition, **21.0% of all Irish electricity customers renegotiated contracts with their incumbent supplier without switching** (*CRU2024132, p.3, p.14; note: covers all electricity customers, domestic and non-domestic*). Combined customer engagement reached **33% in electricity** (*CRU2024132 p.18*), indicating that one in three customers actively seeks better terms annually. In a market where Electric Ireland holds 52.36% of customer sites (1,168,284 sites) and Bord Gáis Energy holds 14.88% (331,930 sites) (*CRU 2023 Report, Table on p.55*), establishing automated retention workflows 45 days prior to contract expiration is essential to prevent competitor attrition.
@@ -42,7 +42,7 @@ Regulatory data extracted directly from Commission for Regulation of Utilities (
 +---------------------------------------------------------------------------------------------------+
 ```
 
-#### Commercial Strategy for SSE Airtricity:
+#### Commercial Strategy for an Irish energy retailer:
 * **Capitalizing on the 21% Renegotiation Window:** While headline switching eased to 11.67% in 2023 (rounded to 12% in CRU executive summary), more than one in five Irish electricity customers (21.0%) renegotiated terms with their existing supplier without switching (*CRU2024132 p.3/p.14*). Competitor pricing algorithms actively target contract expirations via price-comparison portals (Bonkers.ie, Switcher.ie). SSE Airtricity must deploy automated retention workflows at Month 10 of a 12-month contract, offering 1-click renewal discounts and green energy credits before customers initiate external comparison searches.
 * **GB Market Recovery Signal:** In Great Britain, switching plummeted to 3.06% during the 2022 energy crisis under the Energy Price Guarantee. However, switching rebounded to 6.33% in 2023 and 9.03% in 2024 as wholesale stabilization restored tariff differentials. Ireland's market is mirroring this dynamic; active customer retention must take precedence over uncalibrated acquisition.
 
@@ -151,7 +151,7 @@ At any conversion rate above **0.658%**, the campaign operates profitably. At ou
 
 ---
 
-### 5. STRATEGIC RECOMMENDATIONS FOR SSE ENERGY CUSTOMER SOLUTIONS
+### 5. STRATEGIC RECOMMENDATIONS FOR AN IRISH ENERGY RETAILER
 
 1. **Automate In-Contract Renewal Triggers:**  
    Capitalize on the **21.0% in-contract renegotiation window** confirmed in CRU reports (covering all electricity customers). Implement automated workflows that alert digital marketing and retention desks 45 days prior to contract anniversary dates, offering fixed discount renewals before customers visit comparison engines.

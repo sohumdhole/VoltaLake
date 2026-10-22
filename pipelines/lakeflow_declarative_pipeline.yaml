@@ -15,8 +15,8 @@ pipeline:
 configuration:
   pipelines.applyChangesPreview: "true"
   pipelines.useUnmanagedTableFormat: "false"
-  voltalake.environment: "production"
-  voltalake.gdpr.salt: "VoltaLake_2026_Secure_Salt_Customer_Data_Specialist"
+  voltalake.environment: "deployment"
+  voltalake.gdpr.salt: "VoltaLake_2026_Secure_Salt"
 
 libraries:
   - notebook:
@@ -29,8 +29,7 @@ libraries:
 notifications:
   - on_failure:
       email_recipients:
-        - "customer_data_lead@sse.com"
-        - "data_engineering_alerts@sse.com"
+        - "data-alerts@example.com"
 
 data_quality:
   quarantine_catalog: voltalake

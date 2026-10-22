@@ -8,7 +8,7 @@
 # MAGIC The Gold schema delivers an enterprise star schema optimized for fast analytical aggregations,
 # MAGIC Databricks Serverless SQL Warehouse queries, BI visualization in Streamlit, and Databricks Genie conversational AI.
 # MAGIC 
-# MAGIC ### Interview Defense: Architectural Decisions
+# MAGIC ### Design Decisions: Architectural Decisions
 # MAGIC 1. **Why Kimball Dimensional Star Schema over wide flat tables?**
 # MAGIC    While wide flat tables are common in ad-hoc queries, an enterprise dimensional star schema:
 # MAGIC    - Separates business entities (Dimensions: `dim_region`, `dim_date`, `dim_tariff`) from transactional events (Facts: `fact_household_load`, `fact_consumption_region`).

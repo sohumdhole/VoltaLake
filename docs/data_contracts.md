@@ -57,6 +57,6 @@ All data arriving in the `bronze` landing zone is evaluated against explicit exp
    - New non-breaking attributes arriving from upstream open datasets are automatically appended to the bronze table schema.
 2. **Breaking Schema Changes (Dropped Columns / Renamed Keys):**
    - If a primary key (`LCLid`, `countyname`, `Year`) is omitted, Auto Loader triggers a pipeline alert and halts downstream silver updates.
-   - The alert routes immediately to the Data Engineering team via PagerDuty / Webhook (`data_engineering_alerts@sse.com`).
+   - The alert routes immediately to the Data Engineering team via PagerDuty / Webhook (`data-alerts@example.com`).
 3. **Quarantine Error Budget & Circuit Breaker:**
    - If the quarantine failure rate for any dataset exceeds **5.0%** of total batch volume, Lakeflow halts promotion to Gold and triggers an automated circuit breaker.

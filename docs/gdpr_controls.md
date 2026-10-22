@@ -1,7 +1,7 @@
-# VoltaLake: Enterprise GDPR Compliance & Data Protection Framework
+# VoltaLake: GDPR-Style Pseudonymisation & Data Protection Framework
 
 ## 1. Regulatory Context & Legal Basis
-As a multi-jurisdictional analytics lakehouse handling smart metering profiles and household energy data across **Ireland (under GDPR / Data Protection Act 2018)** and **Great Britain (under UK GDPR / Data Protection Act 2018)**, VoltaLake operates under a strict **Data Protection by Design and by Default** mandate (GDPR Article 25).
+As a multi-jurisdictional analytics lakehouse handling smart metering profiles and household energy data across **Ireland (under GDPR / Data Protection Act 2018)** and **Great Britain (under UK GDPR / Data Protection Act 2018)**, VoltaLake demonstrates **Data Protection by Design and by Default** principles (GDPR Article 25).
 
 While the data utilised in VoltaLake is derived from open public releases and anonymised smart-meter trials, the pipeline applies **personal-data safeguards (pseudonymisation, masking and access controls)** of the kind used in production customer data systems.
 

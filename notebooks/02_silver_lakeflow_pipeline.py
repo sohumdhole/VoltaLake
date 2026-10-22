@@ -8,7 +8,7 @@
 # MAGIC The Silver layer enforces rigorous schema conformance, unit standardisation, data quality expectations,
 # MAGIC quarantine isolation, Slowly Changing Dimensions (SCD Type 2), and Enterprise GDPR compliance.
 # MAGIC 
-# MAGIC ### Interview Defense: Architectural Decisions
+# MAGIC ### Design Decisions: Architectural Decisions
 # MAGIC 1. **Why Lakeflow Declarative Pipelines (DLT) with `@dlt.expect_or_quarantine`?**
 # MAGIC    Silent data corruption is unacceptable in customer analytics. Instead of dropping bad rows silently (`expect_or_drop`) or failing the entire batch (`expect_or_fail`), routing malformed records to quarantine tables ensures zero data loss, enables root-cause debugging, and tracks quality metrics over time.
 # MAGIC 2. **Why Unit Conformance to kWh?**

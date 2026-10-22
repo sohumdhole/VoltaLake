@@ -1,32 +1,32 @@
 {
   "evaluation_by_k": {
     "2": {
-      "silhouette": 0.1755688714747435,
-      "davies_bouldin": 1.8895017703760095
+      "silhouette": 0.17556887147474343,
+      "davies_bouldin": 1.8895017703760069
     },
     "3": {
-      "silhouette": 0.1773460916634806,
-      "davies_bouldin": 1.5744490091799557
+      "silhouette": 0.17734609166348056,
+      "davies_bouldin": 1.5744490091799588
     },
     "4": {
-      "silhouette": 0.1661798251495046,
-      "davies_bouldin": 1.4677905728684293
+      "silhouette": 0.1661798251495045,
+      "davies_bouldin": 1.4677905728684286
     },
     "5": {
-      "silhouette": 0.17122904306695,
-      "davies_bouldin": 1.3747384939966527
+      "silhouette": 0.17122904306695003,
+      "davies_bouldin": 1.3747384939966525
     },
     "6": {
-      "silhouette": 0.16250208125121646,
-      "davies_bouldin": 1.315285360203803
+      "silhouette": 0.1625020812512165,
+      "davies_bouldin": 1.3152853682974028
     }
   },
   "selected_k": 3,
   "segmentation_note": "k=3 selected; silhouette 0.18 indicates weak cluster structure, so segments are exploratory",
   "total_valid_households": 58,
   "quarantined_outlier_households": 5,
-  "silhouette_score": 0.1773460916634806,
-  "davies_bouldin_score": 1.5744490091799557,
+  "silhouette_score": 0.17734609166348056,
+  "davies_bouldin_score": 1.5744490091799588,
   "cluster_distribution": {
     "cluster_0": {
       "count": 19,

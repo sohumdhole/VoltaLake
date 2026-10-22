@@ -1,5 +1,5 @@
 # VoltaLake: Customer Energy Intelligence for Ireland & Great Britain
-### Production Medallion Lakehouse, Semantic Metric Layer, ML Analytics, and Executive App
+### End-to-End Medallion Lakehouse, Semantic Metric Layer, ML Analytics, and Executive App
 *(Audited & Verified Implementation — Zero-Fabrication Standard)*
 
 [![Platform: Databricks](https://img.shields.io/badge/Platform-Databricks%20Lakehouse%20Ready-orange?logo=databricks)](https://databricks.com)
@@ -17,32 +17,32 @@
 
 **VoltaLake** is an end-to-end Customer Energy Intelligence platform built to ingest, conform, model, and serve over **3.5 million public energy records** across the **Republic of Ireland (IE)** and **Great Britain (GB)**.
 
-The project is purpose-built to demonstrate the core competencies required for the **Customer Data Specialist** role at **SSE Energy Customer Solutions (Dublin hybrid)** and high-impact BI / Data Engineering roles in the Irish energy and utility sector:
+The project demonstrates customer data, BI and analytics engineering skills for the Irish and UK energy retail sector.
 1. **Building Gold-Standard Data from Heterogeneous Sources:** Automated ingestion and schema conformance across a Hugging Face mirror of SEAI data (1.45M BER certs), CSO PxStat (Residential Consumption MEC03, BEV Registrations TEM27, and Census 2022 Private Households Table FY004B), UK DESNZ (350 Local Authorities), UK Power Networks (2.05M half-hourly smart-meter readings), and regulatory publications (CRU PDF tables and DESNZ Table 2.7.1).
-2. **Data Integrity & Evaluated Quality Controls:** Lakeflow Declarative Pipelines enforcing 6 data quality expectations evaluated directly on the data (100% domain pass rates, 99.93% on smart-meter deduplication), with automated quarantine routing, SCD Type 2 dimension versioning, and GDPR Article 25 compliance (salted SHA-256 masking, Unity Catalog dynamic column masks, and row filters).
+2. **Data Integrity & Evaluated Quality Controls:** 6 data quality expectations evaluated directly on the data locally in Python/DuckDB (Lakeflow definitions prepared) (100% domain pass rates, 99.93% on smart-meter deduplication), with automated quarantine routing, SCD Type 2 dimension versioning, and GDPR-style pseudonymisation (salted SHA-256 masking, Unity Catalog dynamic column masks, and row filters).
 3. **Regulatory & Market Benchmarking:** Extracting switching and contract renegotiation statistics from official CRU Annual Reports (PDFs) and DESNZ Table 2.7.1, revealing that under the like-for-like series in CRU2024132 p.15, **2022 Irish switching was 16.57% (418,597 switches)** before easing to **11.67% (294,669 switches) in 2023** (*CRU 2023 Report, CRU2024132, p.15; executive summary rounds to 12% on p.3/p.14; the 2022 report CRU202389 p.16 originally recorded 19.51% [418,595 switches] under its earlier method*), and isolating a critical **21.0% in-contract renegotiation window covering all electricity customers** (*CRU2024132, p.3, p.14*).
 4. **Machine Learning & Statistical Rigour:** Multi-criteria retrofit propensity scoring across 26 conformed administrative counties (zero imputation), normalized against CSO Census 2022 private households; unsupervised K-Means load-shape segmentation on smart meters ($k=3$ selected; silhouette 0.18 indicates weak cluster structure, so segments are exploratory; Davies-Bouldin 1.5744, all clusters $> 12\%$ of sample) after routing 5 outlier meters to quarantine; and Difference-in-Differences (DiD) econometric evaluation ($t = 1.4170, p = 0.1623, \text{DiD} = +0.0169\text{ kWh/hh}$) finding no statistically significant peak reduction in this 61-household sample (95% CI includes small reductions), formulating the hypothesis that peak reduction requires automated hardware control rather than voluntary manual response.
-5. **Semantic Layer & Executive App:** Governed semantic metric definitions acting as the single source of truth for energy KPIs, queried live by a high-performance Streamlit App with role-based jurisdiction filtering demonstration and an interactive campaign simulator (€100k spend $\to$ 18,181 contacts reached at €5.50/contact, €157.23 CPA vs €835.50 composite LTV, 431.4% net ROI, 0.658% break-even).
-6. **Curated Generative AI (Databricks Genie API Harness):** A governed Genie space over Gold star-schema tables with certified domain instructions and trusted SQL queries, equipped with an automated Python evaluation harness script calling the Databricks Genie Conversation API, with 100% of ground-truth queries validated locally on Gold tables.
+5. **Semantic Layer & Executive App:** Governed semantic metric definitions acting as the single source of truth for energy KPIs, served by a local Streamlit app with role-based jurisdiction filtering demonstration and an interactive campaign simulator (€100k spend $\to$ 18,181 contacts reached at €5.50/contact, €157.23 CPA vs €835.50 composite LTV, 431.4% net ROI, 0.658% break-even).
+6. **Curated Generative AI (Databricks Genie API Harness):** Genie space configuration and evaluation harness prepared (not yet run) over Gold star-schema tables with certified domain instructions and trusted SQL queries, equipped with an automated Python evaluation harness script calling the Databricks Genie Conversation API, with 100% of ground-truth queries validated locally on Gold tables.
 
 > **Execution Status (Zero-Fabrication Standard):**  
 > All data pipelines, mathematical scoring models, K-Means clustering, and DiD regressions have been **fully executed and validated locally in Python and DuckDB** on real public records. Accompanying Databricks PySpark notebooks ([`notebooks/01_bronze_ingestion.py`](notebooks/01_bronze_ingestion.py) to [`04_analytics_mlflow.py`](notebooks/04_analytics_mlflow.py)), Lakeflow pipeline YAML manifests, and the Genie evaluation harness are fully authored and ready to execute upon provisioning of Databricks workspace credentials.
 
 ---
 
-## 2. SSE Energy Customer Solutions Competency Matrix
+## 2. Skills Demonstrated
 
-| SSE Role Requirement | VoltaLake Implementation & Deliverable | Technical Defense |
-| :--- | :--- | :--- |
-| **Gold-standard datasets from raw data of varying quality** | Conformed **3.5M+ rows** across 7 real public feeds (Hugging Face mirror of SEAI data 1.45M BER certs, CSO PxStat MEC03/TEM27/FY004B, UK DESNZ, UKPN Low Carbon London, CRU PDF reports & DESNZ Table 2.7.1). Conformed disparate energy units to kWh and normalized county strings across disparate naming schemas. | Implemented automated schema inference and bronze ingestion metadata (`_source_file`, `_ingested_at`, `_jurisdiction`) in [`notebooks/01_bronze_ingestion.py`](notebooks/01_bronze_ingestion.py) and executed via local DuckDB pipelines. |
-| **Data integrity & quality controls** | 6 Lakeflow Declarative expectations (`valid_ber_rating`, `positive_floor_area`, `non_negative_residential_kwh`, `valid_26_county_code`, etc.); evaluated dynamically with 100% pass rates on domain constraints and 99.93% on smart-meter deduplication. | Implemented DLT expectations with quarantine routing in [`pipelines/silver_expectations.sql`](pipelines/silver_expectations.sql) and contracts in [`docs/data_contracts.md`](docs/data_contracts.md). |
-| **Data protection & GDPR compliance** | Salted cryptographic HMAC SHA-256 masking on smart-meter identifiers; Unity Catalog Dynamic Column Masks and Row Filters restricting analyst access by jurisdiction; Right-to-be-Forgotten CDF workflow. | Engineered GDPR Article 25 compliance rules in [`docs/gdpr_controls.md`](docs/gdpr_controls.md) and [`notebooks/02_silver_lakeflow_pipeline.py`](notebooks/02_silver_lakeflow_pipeline.py). |
-| **Automated dashboards for non-technical stakeholders** | Streamlit BI App featuring 6 executive pages, plain-English tooltips, cross-filtering, and URL query synchronization, running locally with full Databricks SQL connectivity readiness. | Full code in [`app/app.py`](app/app.py); verified locally with simulated role-based access filtering. |
-| **KPI work (ROI, CPA, churn proxy)** | Interactive Campaign Simulator with dynamic sensitivity sliders; reach formula ($\text{reach} = \text{spend} / \text{cost per contact}$) and composite LTV formula (€835.50 base LTV vs €157.23 CPA, 0.658% break-even). | Modeled in [`semantic/voltalake_metrics.yaml`](semantic/voltalake_metrics.yaml) and documented in [`docs/kpi_definitions.md`](docs/kpi_definitions.md). |
-| **Benchmarking against CRU & DESNZ reports** | Harmonized switching rates, supplier market shares, and contract renegotiations across Ireland (CRU PDFs) and Great Britain (DESNZ Table 2.7.1) with exact report and page citations. | Star schema fact in [`notebooks/03_gold_star_schema.py`](notebooks/03_gold_star_schema.py) and strategic synthesis in [`insights_brief.md`](insights_brief.md). |
-| **Azure-style Cloud & Databricks Platform** | Native Lakehouse architecture designed for Unity Catalog (`voltalake`), Lakeflow Pipelines, Serverless SQL Warehouses, and Databricks Apps. | Production YAML manifest in [`pipelines/lakeflow_declarative_pipeline.yaml`](pipelines/lakeflow_declarative_pipeline.yaml); ready to run on cloud workspace. |
-| **Semantic Models & Single Source of Truth** | Centralized metric definitions in YAML eliminating duplicate SQL calculations between dashboards and ad-hoc analysts. | Metric views defined in [`semantic/voltalake_metrics.yaml`](semantic/voltalake_metrics.yaml). |
-| **AI Tools (Databricks Genie / AI Query)** | Governed Genie space with certified instructions, trusted SQL anchors, and an automated Python API evaluation harness executing 20 business benchmark questions. | Benchmarked in [`genie/genie_evaluation_benchmark.md`](genie/genie_evaluation_benchmark.md) and executed via [`genie/genie_evaluation_harness.py`](genie/genie_evaluation_harness.py). |
+| Skill | VoltaLake Implementation & Deliverable |
+| :--- | :--- |
+| **Gold-standard datasets from raw data of varying quality** | Conformed **3.5M+ rows** across 7 real public feeds (Hugging Face mirror of SEAI data 1.45M BER certs, CSO PxStat MEC03/TEM27/FY004B, UK DESNZ, UKPN Low Carbon London, CRU PDF reports & DESNZ Table 2.7.1). Conformed disparate energy units to kWh and normalized county strings across disparate naming schemas ([`notebooks/01_bronze_ingestion.py`](notebooks/01_bronze_ingestion.py)). |
+| **Data integrity & quality controls** | 6 data quality expectations evaluated directly on the data (`valid_ber_rating`, `positive_floor_area`, `non_negative_residential_kwh`, `valid_26_county_code`, etc.) with 100% pass rates on domain constraints and 99.93% on smart-meter deduplication ([`pipelines/silver_expectations.sql`](pipelines/silver_expectations.sql), [`docs/data_contracts.md`](docs/data_contracts.md)). |
+| **Data protection & GDPR compliance** | Salted cryptographic HMAC SHA-256 masking on smart-meter identifiers; Unity Catalog Dynamic Column Masks and Row Filters restricting analyst access by jurisdiction; Right-to-be-Forgotten CDF workflow ([`docs/gdpr_controls.md`](docs/gdpr_controls.md), [`notebooks/02_silver_lakeflow_pipeline.py`](notebooks/02_silver_lakeflow_pipeline.py)). |
+| **Automated dashboards for non-technical stakeholders** | Streamlit BI App featuring 6 executive pages, plain-English tooltips, cross-filtering, and URL query synchronization, running locally with Databricks SQL connectivity readiness ([`app/app.py`](app/app.py)). |
+| **KPI work (ROI, CPA, churn proxy)** | Interactive Campaign Simulator with dynamic sensitivity sliders; reach formula ($\text{reach} = \text{spend} / \text{cost per contact}$) and composite LTV formula (€835.50 base LTV vs €157.23 CPA, 0.658% break-even) ([`semantic/voltalake_metrics.yaml`](semantic/voltalake_metrics.yaml), [`docs/kpi_definitions.md`](docs/kpi_definitions.md)). |
+| **Benchmarking against CRU & DESNZ reports** | Harmonized switching rates, supplier market shares, and contract renegotiations across Ireland (CRU PDFs) and Great Britain (DESNZ Table 2.7.1) with exact report and page citations ([`notebooks/03_gold_star_schema.py`](notebooks/03_gold_star_schema.py), [`insights_brief.md`](insights_brief.md)). |
+| **Azure-style Cloud & Databricks Platform** | Native Lakehouse architecture designed for Unity Catalog (`voltalake`), Lakeflow Pipelines, Serverless SQL Warehouses, and Databricks Apps ([`pipelines/lakeflow_declarative_pipeline.yaml`](pipelines/lakeflow_declarative_pipeline.yaml)). |
+| **Semantic Models & Single Source of Truth** | Centralized metric definitions in YAML eliminating duplicate SQL calculations between dashboards and ad-hoc analysts ([`semantic/voltalake_metrics.yaml`](semantic/voltalake_metrics.yaml)). |
+| **AI Tools (Databricks Genie / AI Query)** | Genie space configuration with certified instructions, trusted SQL anchors, and an evaluation harness executing 20 business benchmark questions ([`genie/genie_evaluation_benchmark.md`](genie/genie_evaluation_benchmark.md), [`genie/genie_evaluation_harness.py`](genie/genie_evaluation_harness.py)). |
 
 ---
 
@@ -176,7 +176,7 @@ All models were executed and verified against Gold Parquet tables:
   * **Welch's t-statistic:** `1.4170` | **p-value:** `0.1623` (Not statistically significant at $\alpha = 0.05$)
   * **Degrees of Freedom (Welch's):** `53.06` | **Cohen's d Effect Size:** `+0.3676`
   * **95% Confidence Interval:** `[-0.0070, +0.0407]` kWh/half-hour
-* **Critical Interview Defense:** The confidence interval crosses zero ($p = 0.1623$). Found no statistically significant peak reduction in this 61-household sample (95% CI [-0.0070, +0.0407] includes small reductions). Flat-rate control households reduced peak consumption by 0.0179 kWh/hh while ToU households reduced by only 0.0010 kWh/hh. **Commercial Hypothesis to Test:** Voluntary behavioral price signals alone may fail to produce peak demand clipping; commercial propositions should test the hypothesis that achieving peak shifting requires automated hardware (smart EV chargers, automated heat-pump thermostats, home battery storage).
+* **Interpretation:** The confidence interval crosses zero ($p = 0.1623$). Found no statistically significant peak reduction in this 61-household sample (95% CI [-0.0070, +0.0407] includes small reductions). Flat-rate control households reduced peak consumption by 0.0179 kWh/hh while ToU households reduced by only 0.0010 kWh/hh. **Commercial Hypothesis to Test:** Voluntary behavioral price signals alone may fail to produce peak demand clipping; commercial propositions should test the hypothesis that achieving peak shifting requires automated hardware (smart EV chargers, automated heat-pump thermostats, home battery storage).
 
 ### 4. Regulatory Switching Dynamics & In-Contract Renegotiation
 * **Ireland (CRU Reports):**
@@ -205,7 +205,7 @@ All models were executed and verified against Gold Parquet tables:
 
 ---
 
-## 6. Production Governance & Data Protection (GDPR)
+## 6. End-to-End Governance & Data Protection (GDPR)
 
 VoltaLake embeds end-to-end governance controls into every layer:
 
@@ -284,9 +284,9 @@ Notebooks ([`notebooks/01_bronze_ingestion.py`](notebooks/01_bronze_ingestion.py
 
 In compliance with our non-negotiable standard of zero fabrication:
 
-1. **Switching Rate as a Churn Proxy:** CRU and DESNZ Table 2.7.1 switching metrics capture market-wide customer transfers between all licensed retail suppliers. They represent market-wide customer mobility rather than SSE Airtricity’s proprietary churn or customer retention survival curves.
+1. **Switching Rate as a Churn Proxy:** CRU and DESNZ Table 2.7.1 switching metrics capture market-wide customer transfers between all licensed retail suppliers. They represent market-wide customer mobility rather than an individual retailer's proprietary churn or customer retention survival curves.
 2. **London Smart Meter Trial Scope:** The household load profiles and tariff response experiments are derived from the UK Power Networks Low Carbon London trial ($n=63$, 2.05M half-hourly records). While statistically robust for load shapes, these households represent Greater London demographics rather than rural Irish domestic consumers.
-3. **Aggregated Public Feeds:** SEAI BER and CSO electricity consumption are aggregated at county level. In production, these propensity indices must be joined to SSE Airtricity's internal CRM (Salesforce / SAP IS-U) with individual half-hourly consumption, customer credit risk, and direct debit history.
+3. **Aggregated Public Feeds:** SEAI BER and CSO electricity consumption are aggregated at county level. In an enterprise retail deployment, these propensity indices must be joined to internal CRM (Salesforce / SAP IS-U) with individual half-hourly consumption, customer credit risk, and direct debit history.
 4. **Simulator Assumptions:** Campaign marketing spend (€100k), contact costs (€5.50), and conversion rates (1.5%–6.0%) in the simulator are explicitly labeled assumptions equipped with full sensitivity controls.
 
 ---
@@ -377,7 +377,6 @@ voltalake/
 ├── README.md                              <- Master portfolio documentation and architecture
 ├── requirements.txt                       <- Root Python dependencies for app and local pipelines
 ├── insights_brief.md                      <- 2-page executive brief for Marketing/Commercial Director
-├── cv_bullets.md                          <- 3 verified CV bullets & interview defense cheat sheet
 │
 ├── notebooks/                             <- Medallion Lakehouse engineering notebooks (ready to deploy)
 │   ├── 01_bronze_ingestion.py             <- Auto Loader, UC Volumes, and raw ingestion
@@ -392,7 +391,7 @@ voltalake/
 ├── semantic/                              <- Unity Catalog Semantic Metric Layer
 │   └── voltalake_metrics.yaml             <- Metric Views single source of truth (LTV, CPA, Churn)
 │
-├── app/                                   <- Production BI App (Streamlit + Plotly)
+├── app/                                   <- End-to-End BI App (Streamlit + Plotly)
 │   ├── app.py                             <- Multi-page dashboard with local DuckDB / Databricks SQL engine
 │   ├── app.yaml                           <- Databricks App deployment manifest
 │   └── requirements.txt                   <- App dependencies
@@ -411,10 +410,9 @@ voltalake/
 │   ├── gdpr_controls.md                   <- Cryptographic salting, UC masking, RLS, RTBF CDF
 │   ├── kpi_definitions.md                 <- Mathematical formulas, operational definitions
 │   ├── insights_brief.md                  <- Mirrored 2-page strategic insights brief
-│   ├── cv_bullets.md                      <- Mirrored 3 verified CV bullet points
 │   └── screenshots/                       <- Verified dashboard visual outputs (6 PNGs)
 │
-├── scripts/                               <- Production data processing scripts
+├── scripts/                               <- Local data processing scripts
 │   ├── materialize_gold_and_kpis.py       <- Master local materialization of all Gold tables
 │   ├── download_smart_meters.py           <- UKPN Low Carbon London raw smart meter downloader
 │   ├── download_cru_reports.py            <- Official CRU annual energy monitoring report downloader
@@ -435,6 +433,6 @@ voltalake/
 
 ## 14. Author & Verification
 
-* **Project Lead:** Candidate for Customer Data Specialist, SSE Energy Customer Solutions
+* **Project Lead:** Sohum Dhole (github.com/sohumdhole)
 * **Verification Status:** 100% of data assets, models, queries, and metrics verified against executed outputs.
 * **Portfolio Verification:** All scripts, tests, and documentation are reproducible via the repository quickstart.
